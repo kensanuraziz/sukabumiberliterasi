@@ -15,18 +15,43 @@ const FALLBACK_PAMFLETS = [
   }
 ];
 
-function PamfletGallery() {
+function PamfletGallery({ agenda }) {
   const [pamflets, setPamflets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lightboxImage, setLightboxImage] = useState(null);
 
   useEffect(() => {
     async function fetchPamflets() {
+      // 1. Dapatkan pamflet langsung dari Google Sheet Agenda jika ada
+      const sheetPamflets = [];
+      if (agenda && agenda.length > 1) {
+        agenda.slice(1).forEach((r, i) => {
+          const name = r[1] || '';
+          const rawUrl = r[7] || '';
+          if (rawUrl && String(rawUrl).trim().length > 5) {
+            const urlStr = String(rawUrl).trim();
+            let id = '';
+            const match = urlStr.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || urlStr.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+            if (match && match[1]) {
+              id = match[1];
+            }
+            const thumb = id ? `https://lh3.googleusercontent.com/d/${id}=w600` : urlStr;
+            const full = id ? `https://lh3.googleusercontent.com/d/${id}=w1000` : urlStr;
+            sheetPamflets.push({
+              id: id || `sheet-p-${i}`,
+              name: name || 'Pamflet Event',
+              thumbnailLink: thumb,
+              webContentLink: full
+            });
+          }
+        });
+      }
+
       const apiKey = import.meta.env.VITE_GOOGLE_API_KEY || '';
       const folderId = import.meta.env.VITE_GDRIVE_FOLDER_ID || '1hJI_2TS3JqKCpc2uaWi2V5YmSlHI8J7YsoTOuYNIAM6JJf6Pwwu5Ph-u5g62e5HE2Op7UgjF';
       
       if (!apiKey) {
-        setPamflets(FALLBACK_PAMFLETS);
+        setPamflets(sheetPamflets.length > 0 ? sheetPamflets : FALLBACK_PAMFLETS);
         setLoading(false);
         return;
       }
@@ -53,20 +78,20 @@ function PamfletGallery() {
               webContentLink: full
             };
           });
-          setPamflets(mapped);
+          setPamflets([...sheetPamflets, ...mapped]);
         } else {
-          setPamflets(FALLBACK_PAMFLETS);
+          setPamflets(sheetPamflets.length > 0 ? sheetPamflets : FALLBACK_PAMFLETS);
         }
       } catch (err) {
-        console.warn('Drive listing failed, using fallback:', err);
-        setPamflets(FALLBACK_PAMFLETS);
+        console.warn('Drive listing failed, using sheet pamflets:', err);
+        setPamflets(sheetPamflets.length > 0 ? sheetPamflets : FALLBACK_PAMFLETS);
       } finally {
         setLoading(false);
       }
     }
 
     fetchPamflets();
-  }, []);
+  }, [agenda]);
 
   const handleShare = async (pamflet) => {
     try {
@@ -242,7 +267,7 @@ export default function AgendaList({ agenda, loading, onRegister, userCoords, se
 
   return (
     <section className="space-y-5">
-      <PamfletGallery />
+      <PamfletGallery agenda={agenda} />
 <div className="space-y-1">
         <h2 className="text-2xl font-bold text-slate-800 dark:text-[#eafaf6]">Agenda Kegiatan</h2>
         <p className="text-xs text-slate-600 dark:text-teal-200/80 opacity-80 leading-relaxed">
