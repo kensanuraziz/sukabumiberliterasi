@@ -6,7 +6,7 @@ export default async (request, context) => {
     return new Response("Missing or invalid file ID", { status: 400 });
   }
 
-  const googleUrl = `https://lh3.googleusercontent.com/d/${fileId}=w400`;
+  const googleUrl = `https://lh3.googleusercontent.com/d/${fileId}=w600`;
   
   try {
     const imgRes = await fetch(googleUrl, {
@@ -20,12 +20,11 @@ export default async (request, context) => {
     }
 
     const imageData = await imgRes.arrayBuffer();
-    const contentType = imgRes.headers.get("content-type") || "image/jpeg";
 
     return new Response(imageData, {
       status: 200,
       headers: {
-        "content-type": contentType,
+        "content-type": "image/jpeg",
         "cache-control": "public, max-age=86400, s-maxage=86400",
         "access-control-allow-origin": "*"
       }
