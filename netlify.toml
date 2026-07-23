@@ -1,0 +1,21 @@
+[build]
+  command = "npm --prefix apps/web run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/voucher"
+  to = "https://script.google.com/macros/s/AKfycbwc87sfVmQF5m5HWmA-XrHb06aldSBXOf__ED4ak5H-vBx_wOE3MMmi10xqwSaoaip1Mw/exec"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[edge_functions]]
+  path = "/*"
+  function = "og-meta"
+
+

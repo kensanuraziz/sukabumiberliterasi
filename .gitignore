@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Production / Build output
+dist/
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# IDE / Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS / Temp
+.DS_Store
+Thumbs.db

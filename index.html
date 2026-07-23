@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sukabumi Berliterasi</title>
+    
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Sukabumi Berliterasi">
+    <meta property="og:description" content="Portal Warta dan Gerakan Literasi di Wilayah Sukabumi">
+    <meta property="og:image" content="/desain-tanpa-judul-2.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Sukabumi Berliterasi">
+    <meta property="twitter:description" content="Portal Warta dan Gerakan Literasi di Wilayah Sukabumi">
+    <meta property="twitter:image" content="/desain-tanpa-judul-2.png">
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- html2canvas for Ticket Image Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+    <!-- SCREEN 1: SPLASH SCREEN -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <div class="logo-wrapper">
+                <div class="logo-pulse">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                </div>
+            </div>
+            <h1 class="splash-title">Sukabumi Berliterasi</h1>
+            <p class="splash-tagline">"Jendela Ilmu Digital untuk Warga Sukabumi"</p>
+            <div class="spinner-container">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTAINER -->
+    <div id="app-container" class="app-container hidden">
+        <!-- Sidebar Navigation (Desktop) -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-book-open-reader"></i>
+                <span>SukaLiterasi</span>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-target="screen-berita">
+                    <i class="fa-solid fa-newspaper"></i>
+                    <span>Berita Literasi</span>
+                </button>
+                <button class="nav-item" data-target="screen-agenda">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Agenda Kegiatan</span>
+                </button>
+                <button class="nav-item" data-target="screen-karya">
+                    <i class="fa-solid fa-feather-pointed"></i>
+                    <span>Karya Pegiat</span>
+                </button>
+                <button class="nav-item" data-target="screen-mitra">
+                    <i class="fa-solid fa-handshake"></i>
+                    <span>Mitra Kolaborasi</span>
+                </button>
+                <button class="nav-item" data-target="screen-layanan">
+                    <i class="fa-solid fa-headset"></i>
+                    <span>Layanan & Donasi</span>
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle-desktop" class="theme-btn">
+                    <i class="fa-solid fa-moon"></i>
+                    <span>Mode Gelap</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Body Area -->
+        <div class="main-content">
+            <!-- Header bar for mobile / page title -->
+            <header class="main-header">
+                <div class="mobile-brand">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                    <span>SukaLiterasi</span>
+                </div>
+                <h2 id="page-title">Berita Literasi</h2>
+                <button id="theme-toggle-mobile" class="theme-btn-circle">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </header>
+
+            <!-- SCREENS CONTAINER -->
+            <main class="screens-container">
+                <!-- SCREEN 2: BERITA LITERASI -->
+                <section id="screen-berita" class="app-screen active">
+                    <!-- Weather Widget Card -->
+                    <div id="weather-card" class="weather-widget">
+                        <div style="text-align: center; font-size: 0.8rem; color: var(--text-muted); padding: 1rem;">
+                            Memuat cuaca...
+                        </div>
+                    </div>
+
+                    <div class="search-bar-container">
+                        <div class="search-input-wrapper">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="news-search" placeholder="Cari berita literasi...">
+                        </div>
+                    </div>
+                    <div id="news-grid" class="cards-grid">
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                    </div>
+                </section>
+
+                <!-- SCREEN 3: AGENDA KEGIATAN -->
+                <section id="screen-agenda" class="app-screen">
+                    <div class="section-intro">
+                        <h3>Daftar Kelas & Kegiatan Aktif</h3>
+                        <p>Ikuti berbagai kegiatan seru untuk meningkatkan kecakapan literasi Anda.</p>
+                    </div>
+
+                    <!-- Qibla Compass Widget -->
+                    <div id="qibla-card" class="qibla-widget">
+                        <div class="qibla-title">
+                            <i class="fa-solid fa-compass"></i>
+                            <span>Penunjuk Arah Kiblat</span>
+                        </div>
+                        <div id="qibla-init-view" class="qibla-prompt-container">
+                            <p class="qibla-prompt">Izinkan akses lokasi GPS Anda untuk mengetahui sudut derajat dan arah kiblat yang tepat dari posisi Anda.</p>
+                            <div style="text-align: center;">
+                                <button id="btn-request-qibla-gps" class="qibla-gps-btn">
+                                    <i class="fa-solid fa-location-crosshairs"></i> Cari Arah Kiblat
+                                </button>
+                            </div>
+                            <div id="qibla-error-msg" class="qibla-error hidden"></div>
+                            <form id="qibla-manual-form" class="qibla-manual-form hidden">
+                                <input type="number" step="any" id="qibla-manual-lat" class="qibla-input" placeholder="Lat (misal: -6.92)" required>
+                                <input type="number" step="any" id="qibla-manual-lon" class="qibla-input" placeholder="Lon (misal: 106.9)" required>
+                                <button type="submit" class="qibla-btn-set">Set</button>
+                            </form>
+                        </div>
+                        <div id="qibla-compass-view" class="qibla-compass-container hidden">
+                            <div class="qibla-info-text">
+                                <div>Lokasi Anda: <strong id="qibla-user-coords" class="highlight">0, 0</strong></div>
+                                <div id="qibla-angle-text" class="qibla-info-degree">Arah Kiblat: -° dari Utara</div>
+                            </div>
+                            
+                            <div class="compass-wrapper">
+                                <div id="compass-card-dial" class="compass-card">
+                                    <span class="compass-dir compass-dir-n">U</span>
+                                    <span class="compass-dir compass-dir-e">T</span>
+                                    <span class="compass-dir compass-dir-s">S</span>
+                                    <span class="compass-dir compass-dir-w">B</span>
+                                    <div class="compass-dotted-ring"></div>
+                                    <div id="compass-qibla-marker" class="qibla-marker">
+                                        <i class="fa-solid fa-mosque qibla-marker-icon"></i>
+                                        <br>
+                                        <span class="qibla-marker-text">KIBLAT</span>
+                                    </div>
+                                </div>
+                                <div class="compass-pivot">
+                                    <div class="compass-center"></div>
+                                </div>
+                                <div class="compass-pointer-fixed"></div>
+                            </div>
+
+                            <div style="text-align: center;">
+                                <button id="btn-activate-sensor" class="qibla-sensor-btn hidden">Aktifkan Kompas Real-time</button>
+                            </div>
+                            <p id="qibla-sensor-desc" class="qibla-sensor-info">Sensor magnetik tidak terdeteksi. Gunakan sudut derajat kiblat di atas untuk menyelaraskan secara manual.</p>
+                        </div>
+                    </div>
+
+                    <div id="agenda-list" class="agenda-list">
+                        <div class="skeleton-card-row"></div>
+                        <div class="skeleton-card-row"></div>
+                    </div>
+
+                    <!-- Flyer Gallery Widget -->
+                    <div id="flyer-gallery-card" class="qibla-widget" style="margin-top: 1.5rem;">
+                        <div class="qibla-title">
+                            <i class="fa-solid fa-images"></i>
+                            <span>Galeri Flyer Event</span>
+                        </div>
+                        <div id="flyer-gallery-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-top: 0.5rem;">
+                            <div class="skeleton-card" style="aspect-ratio: 3/4; height: auto;"></div>
+                            <div class="skeleton-card" style="aspect-ratio: 3/4; height: auto;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Lightbox Modal -->
+                    <div id="flyer-lightbox" class="modal-overlay hidden" style="position: absolute; inset: 0; background-color: rgba(0,0,0,0.9); z-index: 110; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem;">
+                        <!-- Clickable Backdrop -->
+                        <div id="flyer-lightbox-backdrop" style="position: absolute; inset: 0; cursor: pointer;"></div>
+                        
+                        <div class="modal-card glass" style="max-width: 320px; width: 100%; padding: 1rem; border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: 0.75rem; align-items: center; position: relative; z-index: 10;">
+                            <button id="close-flyer-lightbox" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.1); border: none; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; color: var(--text-color); cursor: pointer; z-index: 20;">
+                                <i class="fa-solid fa-xmark" style="font-size: 0.8rem;"></i>
+                            </button>
+                            <div style="width: 100%; aspect-ratio: 3/4; border-radius: var(--radius-md); overflow: hidden; background: #2d3748; margin-top: 1rem; border: 1px solid var(--border-color);">
+                                <img id="lightbox-flyer-img" src="" alt="Flyer" style="width: 100%; height: 100%; object-fit: contain;">
+                            </div>
+                            <div style="width: 100%; text-align: center; margin-top: 0.25rem;">
+                                <h4 id="lightbox-flyer-title" style="font-weight: 800; font-size: 0.7rem; margin-bottom: 0.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 1rem;">Nama Flyer</h4>
+                                <a id="btn-share-flyer-wa" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="display: flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.5rem 1rem; font-size: 0.7rem; font-weight: 800; border-radius: var(--radius-sm); width: 100%;">
+                                    <i class="fa-brands fa-whatsapp"></i> Bagikan ke WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SCREEN 5: KOLEKSI KARYA PEGIAT LITERASI -->
+                <section id="screen-karya" class="app-screen">
+                    <div class="section-intro">
+                        <h3>Karya Pegiat Literasi Kota Sukabumi</h3>
+                        <p>Koleksi karya tulis, buku, dan artikel kreatif dari para pegiat literasi lokal.</p>
+                    </div>
+                    <div class="search-bar-container">
+                        <div class="search-input-wrapper">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="karya-search" placeholder="Cari judul, penulis, atau kategori...">
+                        </div>
+                    </div>
+                    <div id="karya-grid" class="cards-grid">
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                    </div>
+                </section>
+
+                <!-- SCREEN 6: MITRA KOLABORASI -->
+                <section id="screen-mitra" class="app-screen">
+                    <div class="section-intro">
+                        <h3>Mitra Kolaborasi</h3>
+                        <p>Apresiasi kepada lembaga, komunitas, dan instansi yang mendukung Sukabumi Berliterasi.</p>
+                    </div>
+                    <div id="mitra-grid" class="mitra-grid">
+                        <div class="skeleton-mitra"></div>
+                        <div class="skeleton-mitra"></div>
+                    </div>
+                </section>
+
+                <!-- SCREEN 7: LAYANAN ADUAN & KONSULTASI -->
+                <section id="screen-layanan" class="app-screen">
+                    <div class="layanan-container">
+                        <!-- Consultation Card -->
+                        <div class="layanan-card glass">
+                            <div class="layanan-icon-wrapper">
+                                <i class="fa-solid fa-comments"></i>
+                            </div>
+                            <h3>Konsultasi TBM / Pojok Baca</h3>
+                            <p>Ingin mendirikan Pojok Baca atau membutuhkan pendampingan pengelolaan Taman Bacaan Masyarakat (TBM)? Tim relawan kami siap mendampingi secara ramah dan solutif.</p>
+                            <a href="https://forms.gle/dummyFormUrl" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full">
+                                <i class="fa-solid fa-file-signature"></i> Isi Formulir Konsultasi
+                            </a>
+                        </div>
+
+                        <!-- Donasi Buku Card -->
+                        <div class="layanan-card glass">
+                            <div class="layanan-icon-wrapper donasi">
+                                <i class="fa-solid fa-hand-holding-heart"></i>
+                            </div>
+                            <h3>Donasi Buku Layak Baca</h3>
+                            <p>Salurkan buku-buku bermanfaat Anda untuk memperluas cakrawala pengetahuan warga Sukabumi.</p>
+                            
+                            <div class="donasi-options">
+                                <div class="donasi-option">
+                                    <h4><i class="fa-solid fa-map-location-dot"></i> Drop-off (Antar Mandiri)</h4>
+                                    <p>Serahkan langsung ke lokasi drop-off terdekat:</p>
+                                    <ul class="dropoff-locations">
+                                        <li><strong>Pojok Baca Peradma:</strong> Jl. Veteran No. 12, Kec. Cikole, Kota Sukabumi</li>
+                                        <li><strong>Sekretariat Relawan:</strong> Jl. Bhayangkara No. 45, Gunungpuyuh, Kota Sukabumi</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="donasi-option">
+                                    <h4><i class="fa-solid fa-truck-ramp-box"></i> Pickup Service (Jemput Buku)</h4>
+                                    <p>Minimal donasi <strong>20 buku</strong>. Relawan kami akan menjemput langsung ke rumah Anda.</p>
+                                    <div class="pickup-buttons">
+                                        <a href="https://wa.me/6281234567890?text=Halo%20Admin%20Fani%2C%20saya%20ingin%20donasi%20buku%20mohon%20info%20penjemputan..." target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                                            <i class="fa-brands fa-whatsapp"></i> Hubungi WA Fani
+                                        </a>
+                                        <a href="https://wa.me/6289876543210?text=Halo%20Admin%20Ayuna%2C%20saya%20ingin%20donasi%20buku%20mohon%20info%20penjemputan..." target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                                            <i class="fa-brands fa-whatsapp"></i> Hubungi WA Ayuna
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Bottom Navigation Bar (Mobile) -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-target="screen-berita">
+                <i class="fa-solid fa-newspaper"></i>
+                <span>Berita</span>
+            </button>
+            <button class="nav-item" data-target="screen-agenda">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Agenda</span>
+            </button>
+            <button class="nav-item" data-target="screen-karya">
+                <i class="fa-solid fa-feather-pointed"></i>
+                <span>Karya</span>
+            </button>
+            <button class="nav-item" data-target="screen-mitra">
+                <i class="fa-solid fa-handshake"></i>
+                <span>Mitra</span>
+            </button>
+            <button class="nav-item" data-target="screen-layanan">
+                <i class="fa-solid fa-headset"></i>
+                <span>Layanan</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- SCREEN 4: MODAL REGISTRASI & TIKET DIGITAL -->
+    <div id="modal-registration" class="modal-overlay hidden">
+        <div class="modal-card glass">
+            <button class="modal-close" id="close-modal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Step A: Form Registrasi -->
+            <div id="registration-form-step">
+                <h3 class="modal-title">Registrasi Kegiatan</h3>
+                <p class="modal-subtitle" id="reg-agenda-title">Nama Kelas</p>
+                <form id="form-daftar-kelas" class="styled-form">
+                    <input type="hidden" id="form-agenda-id">
+                    <input type="hidden" id="form-agenda-name">
+                    <input type="hidden" id="form-agenda-date">
+                    
+                    <div class="form-group">
+                        <label for="reg-nama">Nama Lengkap</label>
+                        <input type="text" id="reg-nama" required placeholder="Contoh: Budi Santoso">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-hp">Nomor HP / WhatsApp</label>
+                        <input type="tel" id="reg-hp" required placeholder="Contoh: 08123456789">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fa-solid fa-ticket-simple"></i> Dapatkan Tiket Digital
+                    </button>
+                </form>
+            </div>
+
+            <!-- Step B: Tiket Digital -->
+            <div id="ticket-display-step" class="hidden">
+                <h3 class="modal-title">Pendaftaran Berhasil!</h3>
+                <p class="modal-subtitle">Simpan tiket digital Anda di bawah ini:</p>
+                
+                <!-- Ticket Boarding Pass Card -->
+                <div id="digital-ticket" class="ticket-card">
+                    <div class="ticket-header">
+                        <div class="ticket-brand">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                            <span>SukaLiterasi</span>
+                        </div>
+                        <div class="ticket-badge">TIKET DIGITAL</div>
+                    </div>
+                    <div class="ticket-body">
+                        <div class="ticket-row">
+                            <div class="ticket-col">
+                                <span class="ticket-label">NAMA PESERTA</span>
+                                <span class="ticket-value" id="ticket-user-name">-</span>
+                            </div>
+                            <div class="ticket-col text-right">
+                                <span class="ticket-label">KODE UNIK</span>
+                                <span class="ticket-value highlight" id="ticket-code">-</span>
+                            </div>
+                        </div>
+                        <div class="ticket-row">
+                            <div class="ticket-col">
+                                <span class="ticket-label">KELAS / KEGIATAN</span>
+                                <span class="ticket-value" id="ticket-class-name">-</span>
+                            </div>
+                        </div>
+                        <div class="ticket-row">
+                            <div class="ticket-col">
+                                <span class="ticket-label">WAKTU PELAKSANAAN</span>
+                                <span class="ticket-value" id="ticket-date">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ticket-divider">
+                        <div class="divider-circle left"></div>
+                        <div class="divider-line"></div>
+                        <div class="divider-circle right"></div>
+                    </div>
+                    <div class="ticket-footer">
+                        <div class="ticket-info">
+                            <i class="fa-solid fa-circle-info"></i> Tunjukkan tiket ini kepada relawan saat hadir.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ticket Action Buttons -->
+                <div class="ticket-actions">
+                    <button id="btn-save-ticket" class="btn btn-primary">
+                        <i class="fa-solid fa-download"></i> Simpan Tiket
+                    </button>
+                    <button id="btn-share-ticket" class="btn btn-secondary">
+                        <i class="fa-solid fa-share-nodes"></i> Bagikan
+                    </button>
+                    <a id="btn-wa-ticket" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-full">
+                        <i class="fa-brands fa-whatsapp"></i> Kirim Tiket Ke Admin
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN 8: DETAIL WARTA MODAL -->
+    <div id="news-detail-modal" class="modal-overlay hidden" style="position: absolute; inset: 0; background-color: rgba(0,0,0,0.9); z-index: 110; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem;">
+        <!-- Clickable Backdrop -->
+        <div id="news-detail-backdrop" style="position: absolute; inset: 0; cursor: pointer;"></div>
+        
+        <div class="modal-card glass" style="max-width: 320px; width: 100%; padding: 1.25rem; border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: 0.75rem; position: relative; z-index: 10; background-color: var(--card-bg);">
+            <button id="close-news-modal" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.1); border: none; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; color: var(--text-color); cursor: pointer; z-index: 20;">
+                <i class="fa-solid fa-xmark" style="font-size: 0.8rem;"></i>
+            </button>
+            
+            <div id="news-detail-img-container" style="width: 100%; aspect-ratio: 16/10; border-radius: var(--radius-md); overflow: hidden; background: #2d3748; margin-top: 1rem; border: 1px solid var(--border-color);">
+                <img id="news-detail-img" src="" alt="Thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; font-weight: 700; opacity: 0.8; color: var(--text-muted);">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span id="news-detail-date">-</span>
+            </div>
+            
+            <div style="overflow-y: auto; max-h: 160px; display: flex; flex-direction: column; gap: 0.4rem;">
+                <h4 id="news-detail-title" style="font-weight: 800; font-size: 0.8rem; line-height: 1.3; margin: 0; color: var(--text-color);">Judul Berita</h4>
+                <p id="news-detail-summary" style="font-size: 0.7rem; line-height: 1.4; color: var(--text-muted); margin: 0;">Ringkasan warta...</p>
+            </div>
+            
+            <div style="width: 100%; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.25rem;">
+                <a id="btn-share-news-wa" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="display: flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.5rem 1rem; font-size: 0.7rem; font-weight: 800; border-radius: var(--radius-sm); width: 100%;">
+                    <i class="fa-solid fa-share-nodes"></i> Bagikan ke WhatsApp
+                </a>
+                <a id="btn-visit-news-blog" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="display: flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.5rem 1rem; font-size: 0.7rem; font-weight: 800; border-radius: var(--radius-sm); width: 100%;">
+                    Baca Selengkapnya <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Main JavaScript Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
