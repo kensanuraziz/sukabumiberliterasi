@@ -3,11 +3,24 @@ export default async (request, context) => {
   const titleParam = url.searchParams.get("title");
   const productIdParam = url.searchParams.get("productId");
   
+  // Hapus header cache komparatif agar server selalu mengembalikan 200 OK HTML utuh (bukan 304 Not Modified)
+  let originRequest = request;
+  if (titleParam || productIdParam) {
+    const freshHeaders = new Headers(request.headers);
+    freshHeaders.delete("if-none-match");
+    freshHeaders.delete("if-modified-since");
+    originRequest = new Request(request.url, {
+      method: request.method,
+      headers: freshHeaders,
+      body: request.body
+    });
+  }
+
   // Ambil respon asli dari server
-  const response = await context.next();
+  const response = await context.next(originRequest);
   
   // Hanya proses jika respon berupa dokumen HTML
-  if (response.headers.get("content-type")?.includes("text/html")) {
+  if (response.headers.get("content-type")?.includes("text/html") || response.status === 200) {
     try {
       let html = await response.text();
       let metaUpdated = false;
@@ -160,12 +173,16 @@ export default async (request, context) => {
         html = html.replace(/<head>/i, `<head>${newMetaTags}`);
       } else {
         // Fallback default: pastikan URL image absolut agar minimal logo website utama muncul
-        const absoluteImage = `${url.origin}/desain-tanpa-judul-2.png`;
-        html = html.replace(/content="\/desain-tanpa-judul-2.png"/g, `content="${absoluteImage}"`);
+        const absoluteImage = `${url.origin}/og-cover.jpg`;
+        html = html.replace(/content="\/og-cover.jpg"/g, `content="${absoluteImage}"`);
       }
 
+      const freshResponseHeaders = new Headers(response.headers);
+      freshResponseHeaders.set("cache-control", "public, max-age=0, must-revalidate");
+
       return new Response(html, {
-        headers: response.headers
+        status: 200,
+        headers: freshResponseHeaders
       });
     } catch (e) {
       console.error("Gagal memproses Edge Function meta dinamis:", e);
