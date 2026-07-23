@@ -15,7 +15,10 @@
   status = 200
 
 [[edge_functions]]
+  path = "/img-proxy"
+  function = "image-proxy"
+
+[[edge_functions]]
   path = "/*"
   function = "og-meta"
-
 

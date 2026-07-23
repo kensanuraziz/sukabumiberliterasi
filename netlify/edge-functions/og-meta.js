@@ -139,7 +139,9 @@ export default async (request, context) => {
                                      srcUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
                 
                 if (driveIdMatch && driveIdMatch[1]) {
-                  return `https://lh3.googleusercontent.com/d/${driveIdMatch[1]}=w400`;
+                  // Gunakan proxy domain sendiri agar WhatsApp bisa mengambil gambar
+                  // (Google Drive mengirim cache-control: private yang ditolak WhatsApp)
+                  return `${url.origin}/img-proxy?id=${driveIdMatch[1]}`;
                 }
                 
                 return srcUrl;
