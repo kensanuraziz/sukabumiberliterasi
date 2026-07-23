@@ -6,9 +6,9 @@ const STATIC_VOUCHERS = [
   { kode: 'SUKABUMI', tipe: 'nominal', nilai: 2000, minBelanja: 0 },
   { kode: 'DISKON5', tipe: 'persentase', nilai: 5, minBelanja: 0 },
   { kode: 'DISKON10', tipe: 'persentase', nilai: 10, minBelanja: 0 },
-  { kode: 'TOKOLITERA', tipe: 'nominal', nilai: 5000, minBelanja: 0 },
-  { kode: 'PERCIS', tipe: 'persentase', nilai: 10, minBelanja: 0 },
-  { kode: 'BERLITERASI', tipe: 'nominal', nilai: 10000, minBelanja: 0 }
+  { kode: 'TOKOLITERA', tipe: 'nominal', nilai: 3000, minBelanja: 0 },
+  { kode: 'PERCIS', tipe: 'persentase', nilai: 5, minBelanja: 0 },
+  { kode: 'BERLITERASI', tipe: 'nominal', nilai: 5000, minBelanja: 0 }
 ];
 
 const getBgGradient = (category) => {
