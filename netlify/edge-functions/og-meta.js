@@ -164,9 +164,14 @@ export default async (request, context) => {
         const newMetaTags = `
 <title>${title} - ${pageTitleSuffix}</title>
 <meta property="og:type" content="website" />
+<meta property="og:url" content="${url.href}" />
 <meta property="og:title" content="${title}" />
 <meta property="og:description" content="${summary}" />
 <meta property="og:image" content="${imageUrl}" />
+<meta property="og:image:secure_url" content="${imageUrl}" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="600" />
+<meta property="og:image:height" content="315" />
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:title" content="${title}" />
 <meta property="twitter:description" content="${summary}" />
