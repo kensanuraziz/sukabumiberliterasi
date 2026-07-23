@@ -137,11 +137,9 @@ export default function App() {
                       </span>
                       <span className="text-[8px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">LIVE</span>
                     </div>
-                    <img 
-                      src="/litera-news-logo.png" 
-                      alt="Litera News" 
-                      className="h-10 w-auto object-contain" 
-                    />
+                    <h1 className="text-base font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400 font-sans drop-shadow-sm">
+                      Litera <span className="text-emerald-500 font-extrabold underline decoration-emerald-400/40 underline-offset-4">News</span>
+                    </h1>
                   </>
                 ) : (
                   <h1 className="text-sm font-black text-primary dark:text-primary tracking-wide text-center">
