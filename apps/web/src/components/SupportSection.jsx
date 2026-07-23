@@ -1,16 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import html2canvas from 'html2canvas';
 
-const VOUCHER_API_URL = typeof window !== 'undefined' && (window.location.hostname.includes('localhost') || window.location.hostname.includes('127.0.0.1'))
-  ? "https://script.google.com/macros/s/AKfycbwc87sfVmQF5m5HWmA-XrHb06aldSBXOf__ED4ak5H-vBx_wOE3MMmi10xqwSaoaip1Mw/exec"
-  : "/api/voucher";
-
-const FALLBACK_VOUCHERS = [
-  { kode: 'LITERA5', tipe: 'persentase', nilai: 5 },
-  { kode: 'SUKABUMI', tipe: 'nominal', nilai: 2000 },
-  { kode: 'DISKON5', tipe: 'persentase', nilai: 5 },
-  { kode: 'DISKON10', tipe: 'persentase', nilai: 10 },
-  { kode: 'TOKOLITERA', tipe: 'nominal', nilai: 5000 }
+const STATIC_VOUCHERS = [
+  { kode: 'LITERA5', tipe: 'persentase', nilai: 5, minBelanja: 0 },
+  { kode: 'SUKABUMI', tipe: 'nominal', nilai: 2000, minBelanja: 0 },
+  { kode: 'DISKON5', tipe: 'persentase', nilai: 5, minBelanja: 0 },
+  { kode: 'DISKON10', tipe: 'persentase', nilai: 10, minBelanja: 0 },
+  { kode: 'TOKOLITERA', tipe: 'nominal', nilai: 5000, minBelanja: 0 },
+  { kode: 'PERCIS', tipe: 'persentase', nilai: 10, minBelanja: 0 },
+  { kode: 'BERLITERASI', tipe: 'nominal', nilai: 10000, minBelanja: 0 }
 ];
 
 const getBgGradient = (category) => {
@@ -1417,57 +1415,22 @@ export default function SupportSection({
   };
 
   // Checkout and Receipt Generation
-  const handleCheckVoucher = async () => {
+  const handleCheckVoucher = () => {
     if (!voucherCode.trim()) return;
     setCheckingVoucher(true);
     setVoucherError('');
     setAppliedVoucher(null);
     
     const codeUpper = voucherCode.trim().toUpperCase();
-    const fallbackVoucher = FALLBACK_VOUCHERS.find(v => v.kode === codeUpper);
+    const foundVoucher = STATIC_VOUCHERS.find(v => v.kode === codeUpper);
 
-    try {
-      if (!VOUCHER_API_URL) {
-        if (fallbackVoucher) {
-          setAppliedVoucher(fallbackVoucher);
-          setCheckingVoucher(false);
-          return;
-        }
-        setVoucherError('Voucher tidak ditemukan atau tidak valid.');
-        setCheckingVoucher(false);
-        return;
-      }
-      
-      const response = await fetch(`${VOUCHER_API_URL}?code=${encodeURIComponent(voucherCode.trim())}&action=check`);
-      const textResult = await response.text();
-      
-      let result;
-      try {
-        result = JSON.parse(textResult);
-      } catch(e) {
-        console.error("Gagal parse JSON voucher:", textResult);
-        throw new Error("Respon server bukan JSON yang valid. Pastikan Apps Script di-deploy dengan opsi 'Anyone'.");
-      }
-      
-      if (result.error) {
-        if (fallbackVoucher) {
-          setAppliedVoucher(fallbackVoucher);
-        } else {
-          setVoucherError(result.message || 'Voucher tidak valid');
-        }
-      } else {
-        setAppliedVoucher(result.data);
-      }
-    } catch (err) {
-      console.error("Voucher fetch error, trying fallback:", err);
-      if (fallbackVoucher) {
-        setAppliedVoucher(fallbackVoucher);
-      } else {
-        setVoucherError(err.message || 'Voucher tidak ditemukan atau sistem sedang sibuk.');
-      }
-    } finally {
-      setCheckingVoucher(false);
+    if (foundVoucher) {
+      setAppliedVoucher(foundVoucher);
+      setVoucherError('');
+    } else {
+      setVoucherError('Kode voucher tidak ditemukan atau tidak valid.');
     }
+    setCheckingVoucher(false);
   };
 
   const handleCheckout = async () => {
