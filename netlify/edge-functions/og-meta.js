@@ -139,7 +139,7 @@ export default async (request, context) => {
                                      srcUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
                 
                 if (driveIdMatch && driveIdMatch[1]) {
-                  return `https://lh3.googleusercontent.com/d/${driveIdMatch[1]}=w800`;
+                  return `https://lh3.googleusercontent.com/d/${driveIdMatch[1]}=w400`;
                 }
                 
                 return srcUrl;
