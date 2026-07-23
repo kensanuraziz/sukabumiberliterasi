@@ -102,7 +102,15 @@ export default async (request, context) => {
               const rawDesc = matchingRow.c[10]?.v || '';
               summary = rawDesc.length > 120 ? rawDesc.substring(0, 120) + '...' : rawDesc;
               
-              const rawImg = matchingRow.c[3]?.v || '';
+              // Cari gambar di semua kolom gambar produk (kolom 3, 5, 6, 7, 8)
+              const rawImg = (matchingRow.c && (
+                matchingRow.c[3]?.v || 
+                matchingRow.c[5]?.v || 
+                matchingRow.c[6]?.v || 
+                matchingRow.c[7]?.v || 
+                matchingRow.c[8]?.v
+              )) || '';
+
               const getImageUrl = (src) => {
                 if (!src) return '';
                 let srcUrl = String(src).trim();
@@ -111,21 +119,16 @@ export default async (request, context) => {
                 } else if (srcUrl.startsWith('http://')) {
                   srcUrl = srcUrl.replace('http://', 'https://');
                 }
-                if (srcUrl.includes('drive.google.com')) {
-                  let id = '';
-                  if (srcUrl.includes('/file/d/')) {
-                    const parts = srcUrl.split('/file/d/');
-                    if (parts[1]) {
-                      id = parts[1].split('/')[0].split('?')[0];
-                    }
-                  } else if (srcUrl.includes('id=')) {
-                    const parts = srcUrl.split('id=');
-                    if (parts[1]) {
-                      id = parts[1].split('&')[0];
-                    }
-                  }
-                  return id ? `https://lh3.googleusercontent.com/d/${id}=w800` : srcUrl;
+                
+                // Ekstraksi ID Google Drive secara komprehensif
+                const driveIdMatch = srcUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) ||
+                                     srcUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/) ||
+                                     srcUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                
+                if (driveIdMatch && driveIdMatch[1]) {
+                  return `https://lh3.googleusercontent.com/d/${driveIdMatch[1]}=w800`;
                 }
+                
                 return srcUrl;
               };
               imageUrl = getImageUrl(rawImg) || `${url.origin}/og-cover.jpg`;
