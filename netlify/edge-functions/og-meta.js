@@ -81,7 +81,22 @@ export default async (request, context) => {
             const parsed = JSON.parse(rawJson);
             const rows = parsed.table?.rows || [];
             
-            const matchingRow = rows.find(r => r && r.c && String(r.c[0]?.v) === productIdParam);
+            const productRows = rows.slice(1);
+            let matchingRow = null;
+            
+            for (let idx = 0; idx < productRows.length; idx++) {
+              const r = productRows[idx];
+              if (!r || !r.c) continue;
+              
+              const rawCol0 = r.c[0] && r.c[0].v !== null && r.c[0].v !== undefined ? String(r.c[0].v).trim() : '';
+              const computedId = rawCol0 || `p-${idx}`;
+              
+              if (computedId === productIdParam || rawCol0 === productIdParam || String(idx + 1) === productIdParam) {
+                matchingRow = r;
+                break;
+              }
+            }
+
             if (matchingRow) {
               title = matchingRow.c[2]?.v || 'Produk Tokolitera';
               const rawDesc = matchingRow.c[10]?.v || '';
