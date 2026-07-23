@@ -6,7 +6,7 @@ export default async (request, context) => {
     return new Response("Missing or invalid file ID", { status: 400 });
   }
 
-  const googleUrl = `https://lh3.googleusercontent.com/d/${fileId}=w600`;
+  const googleUrl = `https://lh3.googleusercontent.com/d/${fileId}=w400`;
   
   try {
     const imgRes = await fetch(googleUrl, {
